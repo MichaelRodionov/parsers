@@ -1,0 +1,17 @@
+2024-10-21 21:44:29.740 | INFO     | __main__:request_category_products:93 - 200 | moloko-slivki-molochnye-kokteyli-i-sguschennoe-moloko | 1
+2024-10-21 21:44:29.872 | INFO     | __main__:request_category_products:93 - 200 | moloko-slivki-molochnye-kokteyli-i-sguschennoe-moloko | 2
+2024-10-21 21:44:29.921 | INFO     | __main__:request_category_products:93 - 200 | moloko-slivki-molochnye-kokteyli-i-sguschennoe-moloko | 4
+2024-10-21 21:44:29.928 | INFO     | __main__:request_category_products:93 - 200 | moloko-slivki-molochnye-kokteyli-i-sguschennoe-moloko | 6
+2024-10-21 21:44:29.932 | INFO     | __main__:get_products_from_json:53 - Молоко «Искренне Ваш» пастеризованное 2.5% БЗМЖ, 930 г | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.933 | INFO     | __main__:get_products_from_json:53 - Молоко «Вознесенское» 3,2% БЗМЖ, 900 мл | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.934 | INFO     | __main__:get_products_from_json:53 - Молоко «Калория» ультрапастеризованное 2,5% БЗМЖ, 1 л | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.935 | INFO     | __main__:get_products_from_json:53 - Молоко «Коровка из Кореновки» пастеризованное 2,7% БЗМЖ, 900 мл | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.935 | INFO     | __main__:get_products_from_json:53 - Молоко «Очень Важная Корова» 3,2% БЗМЖ, 1400 мл | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.936 | INFO     | __main__:get_products_from_json:53 - Молоко «Очень Важная Корова» пастеризованное 2,5% БЗМЖ, 930 г | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.936 | INFO     | __main__:get_products_from_json:53 - Молоко «Тольяттимолоко» ГОСТ 3,2% БЗМЖ, 900 г | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.937 | INFO     | __main__:get_products_from_json:53 - Молоко пастеризованное «Деревня сыроваров» питьевое цельное 3,5-4,5% БЗМЖ, 900 мл | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.937 | INFO     | __main__:get_products_from_json:53 - Молоко пастеризованное «Кубанский молочник» 2,5%, 1,4 л | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.938 | INFO     | __main__:get_products_from_json:53 - Молоко пастеризованное «Первомайское молоко» 2,5% БЗМЖ, 900 мл | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.938 | INFO     | __main__:get_products_from_json:53 - Молоко пастеризованное «Пестравка» 3,25% БЗМЖ, 930 мл | Количество: 0 | Отсутствует в продаже
+2024-10-21 21:44:29.940 | INFO     | __main__:request_category_products:93 - 200 | moloko-slivki-molochnye-kokteyli-i-sguschennoe-moloko | 3
+2024-10-21 21:44:29.943 | INFO     | __main__:request_category_products:93 - 200 | moloko-slivki-molochnye-kokteyli-i-sguschennoe-moloko | 5

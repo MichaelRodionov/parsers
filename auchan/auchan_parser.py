@@ -1,5 +1,7 @@
 import asyncio
 import json
+import os
+import platform
 
 import aiohttp
 from auchan.auchan_utils import get_cookies
@@ -11,7 +13,6 @@ from loguru import logger
 # ----------------------------------------------------------------------------------------------------------------------
 class AuchanParser:
     def __init__(self, category_link: str):
-        self.goods = []
         self.category_link = category_link
         self.headers = {
             'accept': '*/*',
@@ -21,14 +22,14 @@ class AuchanParser:
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
         }
+        self.goods = []
 
     def get_products_from_json(self, products) -> None:
         """
         Метод скрапинга json и получения данных о товаре
         """
-        try:
-            for product_data in products:
-                product_id = str(product_data.get('productId', ''))
+        for product_data in products:
+            try:
                 price = 0.0
                 price_dict = product_data.get('price', {})
                 if price_dict:
@@ -40,17 +41,25 @@ class AuchanParser:
                     old_price = price
                 link = f"https://www.auchan.ru/product/{product_data.get('code')}/"
                 prod = dict(
-                    product_id=product_id, product_name=str(product_data.get('title', '').replace('\xa0', ' ')),
-                    link=link, price=price, old_price=old_price,
-                    brand_name=str(product_data.get('brand', {}).get('name', '')),
+                    product_id=product_data.get('productId', ''),
+                    product_name=str(product_data.get('title', '').replace('\xa0', ' ')), link=link, price=price,
+                    old_price=old_price, brand_name=str(product_data.get('brand', {}).get('name', '')),
                 )
+                stock = product_data.get('stock', {}).get('qty', 0)
                 if prod not in self.goods:
-                    if product_data.get('stock', {}).get('qty', 0) != 0:
+                    if stock != 0:
                         self.goods.append(prod)
-        except Exception as e:
-            logger.info(str(e))
+                    else:
+                        logger.info(f'{prod.get("product_name")} | Количество: {stock} | Отсутствует в продаже')
+                else:
+                    logger.info(f'{prod.get("name")} | Дубликат')
+            except Exception as e:
+                logger.info(str(e))
 
     async def request_category_products(self, session, proxy, cookies, page, repeat=False, retry=5):
+        """
+        Метод HTTP запроса категории с пагинацией
+        """
         cookies['_GASHOP'] = '001_Mitishchi'
         cookies['region_id'] = '1'
         cookies['merchant_ID_'] = '1'
@@ -112,7 +121,7 @@ class AuchanParser:
 
     async def get_category_products_data(self):
         """
-        Метод запроса страницы товара. Возвращает кортеж вида (html, product), либо (None, None), если возникла ошибка
+        Метод организации пула асинхронных задач для получения данных о продуктах с пагинацией
         """
         cookies, proxy = get_cookies()
         session = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=None, sock_connect=15, sock_read=15))
@@ -135,18 +144,27 @@ class AuchanParser:
 
     def main(self):
         if self.category_link:
+            if platform.system() == 'Windows':
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             asyncio.run(self.get_category_products_data())
             return self.goods
 
 
+# ---------------------------------------------------------------------------------------------------------------------
 def write_json(data):
+    """
+    Функция записи товаров в json
+    """
     with open(f'{data_directory_path}/auchan_products.json', 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
 
 # ----------------------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
+    logs_path = f'{data_directory_path}/logs/auchan_logs.log'
+    logger.add(logs_path, level='INFO')
     auchan_products = AuchanParser(
         'https://www.auchan.ru/catalog/moloko-syr-yayca/moloko-slivki-molochnye-kokteyli-i-sguschennoe-moloko/'
     ).main()
     write_json(auchan_products)
+    os.remove('proxy_auth.zip')
